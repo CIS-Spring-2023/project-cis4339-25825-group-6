@@ -8,6 +8,12 @@ const routes = [
     component: () => import('../components/homePage.vue')
   },
   {
+    // Helmut Brenner - Added Route for Login
+    path: '/userlogin',
+    name: 'userlogin',
+    component: () => import('../components/userLogin.vue')
+  },
+  {
     path: '/intakeform',
     name: 'intakeform',
     props: true,
