@@ -129,10 +129,32 @@ const eventDataSchema = new Schema(
   }
 )
 
+// collection for user credentials encrypted with bcrypt
+const authDataSchema = new Schema(
+  {
+    _id: {
+      type: String, default: uuid.v1,
+      required: true
+    },
+    userName: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+  },
+  },
+  {
+    collection: 'auth'
+  }
+)
+
 // create models from mongoose schemas
 const clients = mongoose.model('client', clientDataSchema)
 const orgs = mongoose.model('org', orgDataSchema)
 const events = mongoose.model('event', eventDataSchema)
+const auth = mongoose.model('auth', authDataSchema)
 
 // package the models in an object to export
-module.exports = { clients, orgs, events }
+module.exports = { clients, orgs, events, auth }
