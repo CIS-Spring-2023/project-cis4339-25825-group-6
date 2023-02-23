@@ -3,6 +3,7 @@ import axios from 'axios'
 
 // Helmut Brenner - This login component is used to login to the application
 export default {
+  name: 'userLogin',
   // Store input data here once entered.
   data() {
     return {
@@ -11,14 +12,14 @@ export default {
     }
   },
   methods: {
-    // Helmut Brenner - This method will take the user input and send it to the backend for validation
+    // Helmut Brenner - This method will take the user input and send it to the backend for validation, if successful the dashboard is diplayed
     // #need to add encryption technique here#
     signIn() {
       var newUser = {
         userName: this.userName,
         passPhrase: this.passPhrase
       }
-      axios.post('http://localhost:3000/api/users/login', newUser)
+      axios.post('http://localhost:3000/login', newUser)
         .then(response => {
           console.log(response)
           if (response.data.success) {
@@ -46,11 +47,11 @@ export default {
       <div class="-space-y-px rounded-md shadow-sm">
         <div>
           <label for="userName" class="sr-only">Username</label>
-          <input id="userName" name="userName" type="text" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Username">
+          <input id="userName" name="userName" type="text" v-model="userName" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Username">
         </div>
         <div>
           <label for="password" class="sr-only">Password</label>
-          <input id="password" name="password" type="password" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password">
+          <input id="password" name="password" type="password" v-model="passPhrase" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password">
         </div>
       </div>
       <div>
