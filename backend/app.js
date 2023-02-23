@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose') //require mongoose library functionaility
 const morgan = require('morgan') // better debugging
+// const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const cors = require('cors')
 // allow using a .env file
@@ -8,6 +9,8 @@ require('dotenv').config() //require the dotenv
 
 // creates a new instance of express application
 const app = express()
+// Add my MongoDB Atlas connection string here
+const connect_str = 'mongodb+srv://helmutkbrenner:mongo@cluster0.b5eh0xe.mongodb.net/?retryWrites=true&w=majority'
 
 // add cors header to the server
 app.use(
@@ -18,7 +21,7 @@ app.use(
 
 // sets up mongoose for the mongoDB connection
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(connect_str)
   .then(() => {
     console.log('Database connection Success!')
   })
@@ -37,6 +40,8 @@ app.use(morgan('dev'))
 app.use('/clients', require('./routes/clients'))
 app.use('/events', require('./routes/events'))
 app.use('/org', require('./routes/org'))
+// app.use('/auth', require('./routes/auth'))
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
