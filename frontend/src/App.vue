@@ -67,6 +67,17 @@ export default {
               </router-link>
             </li>
             <li>
+              <!-- Helmut Brenner - This is the link to the manage services page -->
+              <router-link to="/manageservices">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >app_registration</span
+                >
+                Manage Services
+              </router-link>
+            </li>
+            <li>
               <router-link to="/findclient">
                 <span
                   style="position: relative; top: 6px"

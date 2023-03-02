@@ -14,6 +14,12 @@ const routes = [
     component: () => import('../components/userLogin.vue')
   },
   {
+    // Helmut Brenner - Added Route for Manage Services
+    path: '/manageservices',
+    name: 'manageservices',
+    component: () => import('../components/manageServices.vue')
+  },
+  {
     path: '/intakeform',
     name: 'intakeform',
     props: true,
