@@ -1,7 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose') //require mongoose library functionaility
 const morgan = require('morgan') // better debugging
-// const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const cors = require('cors')
 // allow using a .env file
@@ -40,7 +39,7 @@ app.use(morgan('dev'))
 app.use('/clients', require('./routes/clients'))
 app.use('/events', require('./routes/events'))
 app.use('/org', require('./routes/org'))
-// app.use('/auth', require('./routes/auth'))
+app.use('/auth', require('./routes/auth'))
 
 
 app.listen(PORT, () => {
