@@ -73,20 +73,17 @@ export default {
 </script>
 
 <template>
-  <main>
-    <div>
-      <h1
+  <div>
+    <h1
         class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
       >
         Welcome
       </h1>
       <br />
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-      >
-        <div class="ml-10"></div>
-        <div class="flex flex-col col-span-2">
-          <table class="min-w-full shadow-md rounded">
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="row-span-2 bg-gray-100 p-4 text-center">
+      <table class="min-w-full shadow-md rounded">
             <thead class="bg-gray-50 text-xl">
               <tr class="p-4 text-left">
                 <th class="p-4 text-left">Event Name</th>
@@ -106,8 +103,12 @@ export default {
               </tr>
             </tbody>
           </table>
-          <div>
-            <AttendanceChart
+    </div>
+    <div class="bg-gray-100 p-4 text-center">
+      <h2 class="text-2xl">
+        Event Attendance
+      </h2>
+      <AttendanceChart
               v-if="!loading && !error"
               :label="labels"
               :chart-data="chartData"
@@ -133,9 +134,12 @@ export default {
               </p>
             </div>
             <!-- End of error alert -->
-          </div>
-          <div>
-            <donutChart
+    </div>
+    <div class="bg-gray-100 p-4 text-center">
+      <h2 class="text-2xl">
+        Clients by Zip Code
+      </h2>
+      <donutChart
               v-if="!loading && !error"
               :label="labels"
               :chart-data="chartData"
@@ -161,9 +165,6 @@ export default {
               </p>
             </div>
             <!-- End of error alert -->
-          </div>
-        </div>
-      </div>
     </div>
-  </main>
+  </div>
 </template>

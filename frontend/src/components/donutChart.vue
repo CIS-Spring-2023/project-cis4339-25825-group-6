@@ -16,17 +16,21 @@ export default {
     type: 'doughnut',
     data: {
         labels: [
-        'Red',
-        'Blue',
-        'Yellow'
+        '77006',
+        '77005',
+        '77004',
+        '77003',
+        '77002',
         ],
     datasets: [{
     label: 'My First Dataset',
-    data: [300, 50, 100],
+    data: [300, 50, 100, 40, 120],
     backgroundColor: [
         'rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(153, 102, 255)',
     ],
     hoverOffset: 4
     }]
