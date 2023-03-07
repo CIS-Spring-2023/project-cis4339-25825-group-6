@@ -3,15 +3,23 @@ import { createRouter, createWebHistory } from 'vue-router'
 // make all paths and names lowercase for consistency
 const routes = [
   {
+    // Changed to default to the login screen 
     path: '/',
-    props: true,
-    component: () => import('../components/homePage.vue')
+    name: 'login',
+    component: () => import('../components/userLogin.vue')
   },
   {
-    // Helmut Brenner - Added Route for Login
+    // Alternative path to the login screen
     path: '/userlogin',
     name: 'userlogin',
     component: () => import('../components/userLogin.vue')
+  },
+  {
+    // Helmut Brenner - Added Route for dashboard
+    path: '/dashboard',
+    name: 'dashboard',
+    props: true,
+    component: () => import('../components/homePage.vue')
   },
   {
     // Helmut Brenner - Added Route for Manage Services

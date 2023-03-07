@@ -7,28 +7,36 @@ export default {
   // Store input data here once entered.
   data() {
     return {
-      userName: '',
-      passPhrase: ''
+      viewerUsername: 'viewer',
+      viewerPassphrase: 'password',
+      editorUsername: 'editor',
+      editorPassphrase: 'password',
     }
   },
   methods: {
-    // Helmut Brenner - This method will take the user input and send it to the backend for validation, if successful the dashboard is diplayed
-    // #need to add encryption technique here#
+    // Helmut Brenner - This method will take the user input and compare it to the data in the component. If it matches, it will set the user role in the local storage.
     signIn() {
-      var newUser = {
-        userName: this.userName,
-        passPhrase: this.passPhrase
+      if (this.userName === this.viewerUsername && this.passPhrase === this.viewerPassphrase) {
+        // set local storage to viewer and reroute to the dashboard
+        localStorage.setItem('userRole', 'viewer')
+        this.$router.push({ name: 'dashboard' })
+      } else if (this.userName === this.editorUsername && this.passPhrase === this.editorPassphrase) {
+        // set local storage to editor and reroute to the dashboard
+        localStorage.setItem('userRole', 'editor')
+        this.$router.push({ name: 'dashboard' })
+      } else {
+        alert('Invalid username or password')
       }
-      axios.post('http://localhost:3000/login', newUser)
-        .then(response => {
-          console.log(response)
-          if (response.data.success) {
-            this.$router.push('/dashboard')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    },
+    // this method will check the local storage to see what the role is and then return 1 for viwer and 2 for editor
+    getUserRole() {
+      if (localStorage.getItem('userRole') === 'viewer') {
+        return 1
+      } else if (localStorage.getItem('userRole') === 'editor') {
+        return 2
+      } else {
+        return 0
+      }
     }
   }
 }

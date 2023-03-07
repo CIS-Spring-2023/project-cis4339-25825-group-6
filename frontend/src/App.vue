@@ -1,9 +1,13 @@
 <script>
 import axios from 'axios'
+import userLogin from './components/userLogin.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   name: 'App',
+  components: {
+    userLogin
+  },
   data() {
     return {
       orgName: 'Dataplatform'
@@ -37,7 +41,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/">
+              <router-link to="/dashboard">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
