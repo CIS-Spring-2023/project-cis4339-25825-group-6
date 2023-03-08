@@ -1,73 +1,66 @@
 <script>
-import axios from 'axios'
+import useVuelidate from '@vuelidate/core';
+import { required, email, alpha, numeric } from '@vuelidate/validators';
+import axios from 'axios';
+const apiURL = import.meta.env.VITE_ROOT_API;
 
-// Helmut Brenner - This login component is used to login to the application
 export default {
-  name: 'userLogin',
-  // Store input data here once entered.
+  setup() {
+    return { v$: useVuelidate({ $autoDirty: true }) };
+  },
   data() {
     return {
-      userName: '',
-      passPhrase: ''
-    }
+      services: []
+    };
+  },
+  mounted() {
+    window.scrollTo(0, 0);
+    this.services = this.$store.state.service;
   },
   methods: {
-    // Helmut Brenner - This method will take the user input and send it to the backend for validation, if successful the dashboard is diplayed
-    // #need to add encryption technique here#
-    signIn() {
-      var newUser = {
-        userName: this.userName,
-        passPhrase: this.passPhrase
-      }
-      axios.post('http://localhost:3000/login', newUser)
-        .then(response => {
-          console.log(response)
-          if (response.data.success) {
-            this.$router.push('/dashboard')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
+    getServices() {
+    },
+    editService(id) {
+      this.$router.push({ name: 'editService', params: { id: id } });
+    },
+    addService() {
+      this.$router.push({ name: 'addService' });
+    },  
+    deleteService(id) {
+      let updatedIbj = {
+        _id: id,
+        name: this.name,
+        isActive: false,
+        description: this.desc
+      };
+
+      this.$store.dispatch('updateService', updatedIbj);
+      this.services = this.$store.state.service;
+    }  
   }
-}
+};
 </script>
-
 <template>
-  <!-- Helmut Brenner - This is derived from a free template on tailwind.com "https://tailwindui.com/components/application-ui/forms/sign-in-forms"-->
-  <!-- This form takes the credentials from the user and then pushes them to the script logic above.-->
-  <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="w-full max-w-md space-y-8">
-    <div>
-      <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+  <main>
+    <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center my-10">Services</h1>
+    <button class="py-1 mx-10 bg-red-500 text-white rounded" @click="addService">Add new service</button>
+    <div class="px-10 py-3" v-for="service in services" :key="service._id">
+      <div class="mt-1 bg-neutral-100" v-if="service.isActive == true">
+        <div class="px-4 py-1 bg-neutral-200 flex justify-between ...">
+          <h3 class="text-2xl">
+            {{ service.name }}
+          </h3>
+          <div>
+            <button class="py-1 mr-2 border border-red-500 bg-white text-red-500 rounded" @click="deleteService(service._id)">
+              Delete Service
+            </button>
+            <button class="py-1 bg-red-500 text-white rounded" @click="editService(service._id)">Edit Service</button>
+          </div>
+        </div>
+        <p class="p-4 text-neutral-600">
+          {{ service.description }}
+        </p>
+      </div>
     </div>
-    <form class="mt-8 space-y-6" @submit.prevent="signIn">
-      <input type="hidden" name="remember" value="true">
-      <div class="-space-y-px rounded-md shadow-sm">
-        <div>
-          <label for="userName" class="sr-only">Username</label>
-          <input id="userName" name="userName" type="text" v-model="userName" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Username">
-        </div>
-        <div>
-          <label for="password" class="sr-only">Password</label>
-          <input id="password" name="password" type="password" v-model="passPhrase" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password">
-        </div>
-      </div>
-      <div>
-        <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-            <svg class="h-5 w-5 text-white group-hover:text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" />
-            </svg>
-          </span>
-          Sign in
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
+  </main>
 </template>
-
-<style>
-</style>
