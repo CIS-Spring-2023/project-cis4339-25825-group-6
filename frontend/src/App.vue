@@ -67,16 +67,16 @@ export default {
                 >
                 Create Event
               </router-link>
-            </li>
+            </li>         
             <li v-if="this.role.userRole === 'editor'">
               <!-- Helmut Brenner - This is the link to the manage services page -->
-              <router-link to="/manageservices">
+              <router-link to="/services">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
                   >app_registration</span
                 >
-                Manage Services
+                Services
               </router-link>
             </li>
             <li v-if="this.role.userRole === 'viewer' || this.role.userRole === 'editor'">

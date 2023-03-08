@@ -15,17 +15,31 @@ const routes = [
     component: () => import('../components/userLogin.vue')
   },
   {
+    // Afras Wadiwala - Added Route for Manage Services
+    path: '/services',
+    name: 'services',
+    component: () => import('../components/services.vue')
+  },
+  {
+    // Ability to add
+    path: '/addService',
+    name: 'addService',
+    component: () => import('../components/addService.vue')
+  },
+  {
+    // Ability to edit 
+    path: '/editService/:id',
+    name: 'editService',
+    props: true,
+    props: (route) => ({ id: route.params.id }),
+    component: () => import('../components/editService.vue')
+  },
+  {
     // Helmut Brenner - Added Route for dashboard
     path: '/dashboard',
     name: 'dashboard',
     props: true,
     component: () => import('../components/homePage.vue')
-  },
-  {
-    // Helmut Brenner - Added Route for Manage Services
-    path: '/manageservices',
-    name: 'manageservices',
-    component: () => import('../components/manageServices.vue')
   },
   {
     path: '/intakeform',

@@ -1,0 +1,122 @@
+<script>
+import useVuelidate from '@vuelidate/core';
+import { required, email, alpha, numeric } from '@vuelidate/validators';
+import axios from 'axios';
+const apiURL = import.meta.env.VITE_ROOT_API;
+
+export default {
+  props: {
+    oops: {
+      type: String,
+      required: true
+    }
+  },
+  setup() {
+    return { v$: useVuelidate({ $autoDirty: true }) };
+  },
+  data() {
+    return {
+      name: '',
+      desc: '',
+      isActive: false
+    };
+  },
+  mounted() {
+    window.scrollTo(0, 0);
+
+    const service = this.$store.state.service.find((s) => s._id === this.$route.params.id);
+
+    this.name = service.name;
+    this.desc = service.description;
+    this.isActive = service.isActive;
+   },
+   methods: {
+    getService() {
+      axios.get(`http://localhost:3000/services/services/${this.$route.params.id}`).then((res) => {
+        console.log(res);
+        this.name = res.data.name;
+        this.desc = res.data.description;
+        this.isActive = res.data.isActive;
+      });
+    },
+
+    updateServices(){
+        let updatedIbj = {
+            _id: this.$route.params.id,
+            name: this.name,
+            isActive: this.isActive,
+            description: this.desc
+        };
+
+        this.$store.dispatch('updateService', updatedIbj);
+
+        setTimeout(() => {
+            this.$router.push({ name: 'services' })
+         },100);
+    }
+    }
+};
+    
+
+</script>
+<template>
+  <main>
+    <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center my-10">Edit Services</h1>
+    <div class="px-10 py-3">
+      <form @submit.prevent="updateService">
+        <!-- grid container -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+          <!-- form field -->
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Name</span>
+              <span style="color: #ff0000">*</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="name"
+              />
+            </label>
+          </div>
+
+          <!-- form field -->
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Active</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                placeholder
+                v-model="isActive"
+              />
+            </label>
+          </div>
+        </div>
+
+        <div class="flex flex-col mt-5">
+          <label class="block">
+            <span class="text-gray-700">Description</span>
+            <textarea
+              class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              rows="3"
+              v-model="desc"
+            ></textarea>
+            <!-- <input
+              type="text"
+              placeholder
+              v-model="desc"
+            /> -->
+          </label>
+        </div>
+
+        <!-- grid container -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+          <!-- submit button -->
+          <div class="flex justify-between mt-5 mr-20">
+            <button class="bg-red-700 text-white rounded" type="submit">Update service</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+</template>
