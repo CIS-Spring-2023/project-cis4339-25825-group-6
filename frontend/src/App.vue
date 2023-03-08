@@ -1,12 +1,14 @@
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { role } from './role.js'
 
 export default {
   name: 'App',
   data() {
     return {
-      orgName: 'Dataplatform'
+      orgName: 'Dataplatform',
+      role
     }
   },
   created() {
@@ -36,8 +38,8 @@ export default {
                 User Login
               </router-link>
             </li>
-            <li>
-              <router-link to="/">
+            <li v-if="this.role.userRole === 'viewer' || this.role.userRole === 'editor'">
+              <router-link to="/dashboard">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -46,7 +48,7 @@ export default {
                 Dashboard
               </router-link>
             </li>
-            <li>
+            <li v-if="this.role.userRole === 'editor'">
               <router-link to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
@@ -56,7 +58,7 @@ export default {
                 Client Intake Form
               </router-link>
             </li>
-            <li>
+            <li v-if="this.role.userRole === 'editor'">
               <router-link to="/eventform">
                 <span
                   style="position: relative; top: 6px"
@@ -65,9 +67,9 @@ export default {
                 >
                 Create Event
               </router-link>
-            </li>
-            <li>
-              <!-- Helmut Brenner - This is the link to the services page -->
+            </li>         
+            <li v-if="this.role.userRole === 'editor'">
+              <!-- Helmut Brenner - This is the link to the manage services page -->
               <router-link to="/services">
                 <span
                   style="position: relative; top: 6px"
@@ -77,7 +79,7 @@ export default {
                 Services
               </router-link>
             </li>
-            <li>
+            <li v-if="this.role.userRole === 'viewer' || this.role.userRole === 'editor'">
               <router-link to="/findclient">
                 <span
                   style="position: relative; top: 6px"
@@ -87,7 +89,7 @@ export default {
                 Find Client
               </router-link>
             </li>
-            <li>
+            <li v-if="this.role.userRole === 'viewer' || this.role.userRole === 'editor'">
               <router-link to="/findevents">
                 <span
                   style="position: relative; top: 6px"
