@@ -1,4 +1,6 @@
 <script>
+import { role } from '../role'
+
 // Helmut Brenner - This login component is used to login to the application
 export default {
   name: 'userLogin',
@@ -11,7 +13,7 @@ export default {
       editorPassphrase: 'password',
       inputUsername: '',
       inputPassphrase: '',
-      userRole: ''
+      role
     }
   },
   methods: {
@@ -19,14 +21,14 @@ export default {
     signIn() {
       if (this.inputUsername === this.viewerUsername && this.inputPassphrase === this.viewerPassphrase) {
         // set userRole to viewer and reroute to the dashboard
-        sessionStorage.setItem('userRole', 'viewer')
+        this.role.userRole = 'viewer'
         this.$router.push({ name: 'dashboard' })
       } else if (this.inputUsername === this.editorUsername && this.inputPassphrase === this.editorPassphrase) {
         // set userRole to editor and reroute to the dashboard
-        this.userRole = 'editor'
+        this.role.userRole = 'editor'
         this.$router.push({ name: 'dashboard' })
       } else {
-        alert('Invalid username or password')
+        alert('Invalid username or password. Please Try Again.')
         this.$router.push({ name: 'login' })
       }
     }
