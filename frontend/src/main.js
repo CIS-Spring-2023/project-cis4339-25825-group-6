@@ -16,28 +16,28 @@ const store = createStore({
           name: 'Family Support',
           isActive: true,
           description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat lectus eu bibendum efficitur. Nam auctor rutrum lorem, sit amet vehicula nibh blandit nec.'
+            'A family support service provides resources and assistance to families to improve their well-being and strengthen relationships.'
         },
         {
           _id: 'service2',
           name: 'Adult Education',
           isActive: true,
           description:
-            'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla sagittis eros non nulla posuere suscipit. Sed varius aliquam nisi, id viverra tellus sollicitudin non.'
+            'An adult education service offers educational opportunities and training programs to individuals over the age of 18 to enhance their knowledge and skills.'
         },
         {
           _id: 'service3',
           name: 'Youth Services Program',
           isActive: true,
           description:
-            'Donec euismod aliquet enim, ac imperdiet sapien lobortis a. Praesent dapibus lorem vel nulla consequat, vitae fringilla felis egestas. Nulla facilisi. Nullam ac libero vel elit dictum pellentesque.'
+            'A youth services program offers a variety of activities and support services to young people to help them develop essential life skills and reach their full potential.'
         },
         {
           _id: 'service4',
           name: 'Early Childhood Education',
           isActive: true,
           description:
-            'Vestibulum vitae hendrerit augue, eu sodales tellus. Morbi varius, felis vel fermentum finibus, dolor purus venenatis nibh, id molestie arcu elit ut est.'
+            'Early childhood education is a critical stage of learning that focuses on the development of young childrens cognitive, social, emotional, and physical skills.'
         }
       ]
     };
