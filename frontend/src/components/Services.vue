@@ -23,9 +23,12 @@ export default {
     editService(id) {
       this.$router.push({ name: 'editService', params: { id: id } });
     },
+
+    //Add services feature
     addService() {
       this.$router.push({ name: 'addService' });
     },  
+    // Delete feature
     deleteService(id) {
       let updatedIbj = {
         _id: id,
