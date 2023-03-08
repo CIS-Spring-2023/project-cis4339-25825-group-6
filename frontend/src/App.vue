@@ -1,13 +1,9 @@
 <script>
 import axios from 'axios'
-import userLogin from './components/userLogin.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   name: 'App',
-  components: {
-    userLogin
-  },
   data() {
     return {
       orgName: 'Dataplatform'

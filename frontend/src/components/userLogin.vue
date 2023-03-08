@@ -1,6 +1,4 @@
 <script>
-import axios from 'axios'
-
 // Helmut Brenner - This login component is used to login to the application
 export default {
   name: 'userLogin',
@@ -11,31 +9,25 @@ export default {
       viewerPassphrase: 'password',
       editorUsername: 'editor',
       editorPassphrase: 'password',
+      inputUsername: '',
+      inputPassphrase: '',
+      userRole: ''
     }
   },
   methods: {
     // Helmut Brenner - This method will take the user input and compare it to the data in the component. If it matches, it will set the user role in the local storage.
     signIn() {
-      if (this.userName === this.viewerUsername && this.passPhrase === this.viewerPassphrase) {
-        // set local storage to viewer and reroute to the dashboard
-        localStorage.setItem('userRole', 'viewer')
+      if (this.inputUsername === this.viewerUsername && this.inputPassphrase === this.viewerPassphrase) {
+        // set userRole to viewer and reroute to the dashboard
+        sessionStorage.setItem('userRole', 'viewer')
         this.$router.push({ name: 'dashboard' })
-      } else if (this.userName === this.editorUsername && this.passPhrase === this.editorPassphrase) {
-        // set local storage to editor and reroute to the dashboard
-        localStorage.setItem('userRole', 'editor')
+      } else if (this.inputUsername === this.editorUsername && this.inputPassphrase === this.editorPassphrase) {
+        // set userRole to editor and reroute to the dashboard
+        this.userRole = 'editor'
         this.$router.push({ name: 'dashboard' })
       } else {
         alert('Invalid username or password')
-      }
-    },
-    // this method will check the local storage to see what the role is and then return 1 for viwer and 2 for editor
-    getUserRole() {
-      if (localStorage.getItem('userRole') === 'viewer') {
-        return 1
-      } else if (localStorage.getItem('userRole') === 'editor') {
-        return 2
-      } else {
-        return 0
+        this.$router.push({ name: 'login' })
       }
     }
   }
@@ -55,11 +47,11 @@ export default {
       <div class="-space-y-px rounded-md shadow-sm">
         <div>
           <label for="userName" class="sr-only">Username</label>
-          <input id="userName" name="userName" type="text" v-model="userName" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Username">
+          <input id="inputUsername" name="inputUsername" type="text" v-model="this.inputUsername" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Username">
         </div>
         <div>
           <label for="password" class="sr-only">Password</label>
-          <input id="password" name="password" type="password" v-model="passPhrase" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password">
+          <input id="inputPassphrase" name="inputPassphrase" type="password" v-model="this.inputPassphrase" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password">
         </div>
       </div>
       <div>
