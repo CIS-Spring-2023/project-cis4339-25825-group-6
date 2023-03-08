@@ -38,7 +38,7 @@ export default {
                 User Login
               </router-link>
             </li>
-            <li v-if="this.role.userRole === 'viewer' || this.role.userRole === 'editor'">
+            <li>
               <router-link to="/dashboard">
                 <span
                   style="position: relative; top: 6px"
@@ -68,7 +68,7 @@ export default {
                 Create Event
               </router-link>
             </li>         
-            <li v-if="this.role.userRole === 'editor'">
+            <li v-if="this.role.userRole === 'editor' || this.role.userRole === 'viewer'">
               <!-- Helmut Brenner - This is the link to the manage services page -->
               <router-link to="/services">
                 <span

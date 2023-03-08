@@ -1,7 +1,7 @@
 <script>
 import useVuelidate from '@vuelidate/core';
 import { required, email, alpha, numeric } from '@vuelidate/validators';
-import axios from 'axios';
+import { role } from '../role.js'
 const apiURL = import.meta.env.VITE_ROOT_API;
 
 export default {
@@ -10,7 +10,8 @@ export default {
   },
   data() {
     return {
-      services: []
+      services: [],
+      role
     };
   },
   mounted() {
@@ -39,21 +40,25 @@ export default {
 
       this.$store.dispatch('updateService', updatedIbj);
       this.services = this.$store.state.service;
-    }  
+    }
   }
 };
 </script>
 <template>
   <main>
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center my-10">Services</h1>
-    <button class="py-1 mx-10 bg-red-500 text-white rounded" @click="addService">Add new service</button>
+    <!-- Check which user is logged in and display button or not -->
+    <div v-if="this.role.userRole === 'editor'">
+      <button class="py-1 mx-10 bg-red-500 text-white rounded" @click="addService">Add new service</button>
+    </div>
     <div class="px-10 py-3" v-for="service in services" :key="service._id">
       <div class="mt-1 bg-neutral-100" v-if="service.isActive == true">
         <div class="px-4 py-1 bg-neutral-200 flex justify-between ...">
           <h3 class="text-2xl">
             {{ service.name }}
           </h3>
-          <div>
+          <!-- Check which user is logged in and display button or not -->
+          <div v-if="this.role.userRole === 'editor'">
             <button class="py-1 mr-2 border border-red-500 bg-white text-red-500 rounded" @click="deleteService(service._id)">
               Delete Service
             </button>
