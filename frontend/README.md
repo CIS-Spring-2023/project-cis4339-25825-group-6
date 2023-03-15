@@ -1,6 +1,6 @@
 # Data Platform Frontend
 
-Follow the instructions below to set up our project. The steps have not changed.
+Follow the instructions below to set up our project. 
 
 This project uses [VueJS 3](https://vuejs.org/) with [Vite](https://vitejs.dev/) and [TailwindCSS](https://tailwindcss.com/).
 For form validation [Vuelidate](https://vuelidate-next.netlify.app/) is used.
@@ -20,3 +20,15 @@ VITE_ROOT_API is the URL for the backend API, either on localhost or in the clou
 ### Compiles and hot-reloads for development
 
     npm run dev
+
+### Login Information
+Currently there are two users available for testing purposes:
+
+    username: viewer
+    password: password
+
+    username: editor
+    password: password
+
+These two roles are used to restrict access to certain pages. Upon first logging in, the role is null so you see the login and dashboard. Upon logging
+in with one of the above credentials, the role is set and you can navigate to the other pages.
