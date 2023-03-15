@@ -4,7 +4,7 @@ import { required, email, alpha, numeric } from '@vuelidate/validators';
 import axios from 'axios';
 const apiURL = import.meta.env.VITE_ROOT_API;
 
-//Adding Services
+// Adding Services component
 
 export default {
   setup() {
@@ -12,6 +12,7 @@ export default {
 },
 data() {
     return {
+      // data that comprises the service
       id: '',
       name: '',
       Desc: '',
@@ -22,6 +23,7 @@ data() {
     window.scrollTo(0, 0);
 },
 methods: {
+  // This method will be used to add a service to the DB.
     addServices(){
         let newObj = {
             _id: Date.now().toString(),
@@ -42,6 +44,7 @@ methods: {
 
 </script>
 <template>
+  <!-- This form collects the data to add a service -->
   <main>
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center my-10">Add Service</h1>
     <div class="px-10 py-3">

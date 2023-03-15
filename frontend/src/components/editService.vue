@@ -4,6 +4,7 @@ import { required, email, alpha, numeric } from '@vuelidate/validators';
 import axios from 'axios';
 const apiURL = import.meta.env.VITE_ROOT_API;
 
+// This component allows the user to edit a service. The APIs currently don't work unless you have the correct MongoDB backend to connect to. it also uses vuex to store state.
 export default {
   props: {
     oops: {

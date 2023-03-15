@@ -1,5 +1,7 @@
 # Data Platform Frontend
 
+Follow the instructions below to set up our project. The steps have not changed.
+
 This project uses [VueJS 3](https://vuejs.org/) with [Vite](https://vitejs.dev/) and [TailwindCSS](https://tailwindcss.com/).
 For form validation [Vuelidate](https://vuelidate-next.netlify.app/) is used.
 

@@ -17,7 +17,7 @@ export default {
     }
   },
   methods: {
-    // Helmut Brenner - This method will take the user input and compare it to the data in the component. If it matches, it will set the user role in the local storage.
+    // Helmut Brenner - This method will take the user input and compare it to the data in the component. If it matches, it will set the user role in the state management file role.js.
     signIn() {
       if (this.inputUsername === this.viewerUsername && this.inputPassphrase === this.viewerPassphrase) {
         // set userRole to viewer and reroute to the dashboard
