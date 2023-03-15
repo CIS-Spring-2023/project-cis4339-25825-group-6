@@ -1,14 +1,10 @@
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import displayServices from './displayServices.vue'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
-  components: {
-    displayServices
-  },
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
@@ -191,10 +187,6 @@ export default {
                 />
                 <span class="ml-2">Early Childhood Education</span>
               </label>
-            </div>
-            <!-- Helmut Brenner Added this code from the homework as a starting point-->
-            <div>
-              <displayServices></displayServices>
             </div>
           </div>
         </div>

@@ -32,7 +32,7 @@ methods: {
             Desc: this.desc
         };
 
-        this.$store.dispatch('addServices', newObj);
+        this.$store.dispatch('addService', newObj);
     
 
         setTimeout(() => {
@@ -48,7 +48,7 @@ methods: {
   <main>
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center my-10">Add Service</h1>
     <div class="px-10 py-3">
-      <form @submit.prevent="addService">
+      <form @submit.prevent="addServices">
         <!-- grid container -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
           <div class="flex flex-col">

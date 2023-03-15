@@ -64,7 +64,7 @@ export default {
   <main>
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center my-10">Edit Services</h1>
     <div class="px-10 py-3">
-      <form @submit.prevent="updateService">
+      <form @submit.prevent="updateServices()">
         <!-- grid container -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
           <!-- form field -->
