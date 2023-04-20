@@ -1,4 +1,5 @@
 <script>
+// This file is taken from the barchart component and modified to work with a donut chart. I also used code from the Chart.js Donut Chart documentation.
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 
@@ -11,6 +12,7 @@ export default {
       type: Array
     }
   },
+  // currently unnecessary async function because the data is hardcoded. Will use later.
   async mounted() {
     await new Chart(this.$refs.donutChart, {
     type: 'doughnut',
@@ -37,6 +39,7 @@ export default {
     },
 })},}
 </script>
+
 <template>
     <div class="shadow-lg rounded-lg overflow-hidden">
       <canvas class="p-10" ref="donutChart"></canvas>
