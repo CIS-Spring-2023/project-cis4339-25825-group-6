@@ -1,93 +1,76 @@
 <script>
-import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import axios from "axios";
-const apiURL = "http://localhost:3004";
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import axios from 'axios'
+const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) };
+    return { v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
     return {
       // removed unnecessary extra array to track services
       event: {
-        name: "",
+        name: '',
         services: [],
-        date: "",
+        date: '',
         address: {
-          line1: "",
-          line2: "",
-          city: "",
-          county: "",
-          zip: "",
+          line1: '',
+          line2: '',
+          city: '',
+          county: '',
+          zip: ''
         },
-        description: "",
-      },
-      selectedServices: [],
-    };
-  },
-  mounted() {
-    this.getServices();
+        description: ''
+      }
+    }
   },
   methods: {
-    getServices() {
-      axios.get(`${apiURL}/services/services`).then((res) => {
-        this.event.services = [];
-        this.event.services = res.data;
-      });
-    },
     async handleSubmitForm() {
       // Checks to see if there are any errors in validation
-      const isFormCorrect = await this.v$.$validate();
+      const isFormCorrect = await this.v$.$validate()
       // If no errors found. isFormCorrect = True then the form is submitted
-
-      console.log(this.event);
       if (isFormCorrect) {
-        this.event.services = [];
-        this.event.services = this.selectedServices;
-
         axios
           .post(`${apiURL}/events`, this.event)
-          .then((res) => {
-            alert("Event has been added.");
-            this.$router.push({ name: "findevents" });
+          .then(() => {
+            alert('Event has been added.')
+            this.$router.push({ name: 'findevents' })
           })
           .catch((error) => {
-            console.log(error);
-          });
+            console.log(error)
+          })
       }
-    },
-    toggleSelection(serviceName) {
-      if (this.selectedServices.includes(serviceName)) {
-        this.selectedServices = this.selectedServices.filter((name) => name !== serviceName);
-      } else {
-        this.selectedServices.push(serviceName);
-      }
-      console.log(this.selectedServices);
-    },
+    }
   },
   // sets validations for the various data properties
   validations() {
     return {
       event: {
         name: { required },
-        date: { required },
-      },
-    };
-  },
-};
+        date: { required }
+      }
+    }
+  }
+}
 </script>
 <template>
   <main>
     <div>
-      <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Create New Event</h1>
+      <h1
+        class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
+      >
+        Create New Event
+      </h1>
     </div>
     <div class="px-10 py-20">
       <!-- @submit.prevent stops the submit event from reloading the page-->
       <form @submit.prevent="handleSubmitForm">
         <!-- grid container -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
+        >
           <h2 class="text-2xl font-bold">Event Details</h2>
 
           <!-- form field -->
@@ -95,9 +78,19 @@ export default {
             <label class="block">
               <span class="text-gray-700">Event Name</span>
               <span style="color: #ff0000">*</span>
-              <input type="text" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" v-model="event.name" />
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="event.name"
+              />
               <span class="text-black" v-if="v$.event.name.$error">
-                <p class="text-red-700" v-for="error of v$.event.name.$errors" :key="error.$uid">{{ error.$message }}!</p>
+                <p
+                  class="text-red-700"
+                  v-for="error of v$.event.name.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}!
+                </p>
               </span>
             </label>
           </div>
@@ -107,9 +100,19 @@ export default {
             <label class="block">
               <span class="text-gray-700">Date</span>
               <span style="color: #ff0000">*</span>
-              <input class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" v-model="event.date" type="date" />
+              <input
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="event.date"
+                type="date"
+              />
               <span class="text-black" v-if="v$.event.date.$error">
-                <p class="text-red-700" v-for="error of v$.event.date.$errors" :key="error.$uid">{{ error.$message }}!</p>
+                <p
+                  class="text-red-700"
+                  v-for="error of v$.event.date.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}!
+                </p>
               </span>
             </label>
           </div>
@@ -121,7 +124,6 @@ export default {
             <label class="block">
               <span class="text-gray-700">Description</span>
               <textarea
-                v-model="event.description"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 rows="2"
               ></textarea>
@@ -134,23 +136,65 @@ export default {
           <!-- form field -->
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
-
-            <div v-for="item in event.services" :key="item._id">
-              <label class="inline-flex items-center">
+            <div>
+              <label for="familySupport" class="inline-flex items-center">
                 <input
-                  @click="toggleSelection(item.name)"
                   type="checkbox"
-                  :value="item.name"
+                  id="familySupport"
+                  value="Family Support"
+                  v-model="event.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                  notchecked
                 />
-                <span class="ml-2">{{ item.name }}</span>
+                <span class="ml-2">Family Support</span>
+              </label>
+            </div>
+            <div>
+              <label for="adultEducation" class="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  id="adultEducation"
+                  value="Adult Education"
+                  v-model="event.services"
+                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                  notchecked
+                />
+                <span class="ml-2">Adult Education</span>
+              </label>
+            </div>
+            <div>
+              <label for="youthServices" class="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  id="youthServices"
+                  value="Youth Services Program"
+                  v-model="event.services"
+                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                  notchecked
+                />
+                <span class="ml-2">Youth Services Program</span>
+              </label>
+            </div>
+            <div>
+              <label for="childhoodEducation" class="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  id="childhoodEducation"
+                  value="Early Childhood Education"
+                  v-model="event.services"
+                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                  notchecked
+                />
+                <span class="ml-2">Early Childhood Education</span>
               </label>
             </div>
           </div>
         </div>
 
         <!-- grid container -->
-        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+        <div
+          class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
+        >
           <h2 class="text-2xl font-bold">Address</h2>
           <!-- form field -->
           <div class="flex flex-col">
@@ -216,7 +260,9 @@ export default {
         </div>
 
         <div class="flex justify-between mt-10 mr-20">
-          <button class="bg-red-700 text-white rounded" type="submit">Add New Event</button>
+          <button class="bg-red-700 text-white rounded" type="submit">
+            Add New Event
+          </button>
         </div>
       </form>
     </div>

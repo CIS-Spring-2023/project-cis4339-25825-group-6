@@ -1,45 +1,47 @@
 <script>
-import useVuelidate from "@vuelidate/core";
-import { required, email, alpha, numeric } from "@vuelidate/validators";
-import axios from "axios";
-const apiURL = "http://localhost:3004";
+import useVuelidate from '@vuelidate/core';
+import { required, email, alpha, numeric } from '@vuelidate/validators';
+import axios from 'axios';
+const apiURL = import.meta.env.VITE_ROOT_API;
 
 // Adding Services component
 
 export default {
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) };
-  },
-  data() {
+},
+data() {
     return {
       // data that comprises the service
-      id: "",
-      name: "",
-      Desc: "",
-      isActive: false,
+      id: '',
+      name: '',
+      Desc: '',
+      isActive: false
     };
-  },
+},
   mounted() {
     window.scrollTo(0, 0);
-  },
-  methods: {
-    // This method will be used to add a service to the DB.
-    addServices() {
-      let newObj = {
-        name: this.name,
-        active: true,
-        description: this.Desc,
-      };
+},
+methods: {
+  // This method will be used to add a service to the DB.
+    addServices(){
+        let newObj = {
+            _id: Date.now().toString(),
+            name: this.name,
+            isActive: true,
+            Desc: this.desc
+        };
 
-      axios.post(`${apiURL}/services/services`, newObj).then((res) => {
-        console.log(res);
-      });
-      setTimeout(() => {
-        this.$router.push({ name: "services" });
-      }, 100);
-    },
-  },
+        this.$store.dispatch('addService', newObj);
+    
+
+        setTimeout(() => {
+        this.$router.push({ name: 'services' });
+        }, 100);
+    }
+  }
 };
+
 </script>
 <template>
   <!-- This form collects the data to add a service -->
@@ -53,7 +55,11 @@ export default {
             <label class="block">
               <span class="text-gray-700">Name</span>
               <span style="color: #ff0000">*</span>
-              <input type="text" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" v-model="name" />
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="name"
+              />
             </label>
           </div>
         </div>
@@ -61,7 +67,11 @@ export default {
         <div class="flex flex-col mt-5">
           <label class="block">
             <span class="text-gray-700">Description</span>
-            <textarea class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="3" v-model="Desc"></textarea>
+            <textarea
+              class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              rows="3"
+              v-model="desc"
+            ></textarea>
             <!-- <input
               type="text"
               placeholder
