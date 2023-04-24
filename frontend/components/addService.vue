@@ -34,6 +34,7 @@ export default {
       axios.post(`${apiURL}/services/services`, newObj).then((res) => {
         console.log(res);
       });
+
       setTimeout(() => {
         this.$router.push({ name: "services" });
       }, 100);
