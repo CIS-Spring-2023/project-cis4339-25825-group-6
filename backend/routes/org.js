@@ -8,7 +8,7 @@ const { orgs } = require('../models/models')
 
 // GET org
 router.get('/', (req, res, next) => {
-  orgs.findById(org, (error, data) => {
+  orgs.findOne({ _id: org }, (error, data) => {
     if (error) {
       return next(error)
     } else {

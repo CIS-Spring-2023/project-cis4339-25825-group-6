@@ -16,7 +16,8 @@ data() {
       id: '',
       name: '',
       Desc: '',
-      isActive: false
+      isActive: false,
+      org: ''
     };
 },
   mounted() {
@@ -25,19 +26,28 @@ data() {
 methods: {
   // This method will be used to add a service to the DB.
     addServices(){
-        let newObj = {
-            _id: Date.now().toString(),
-            name: this.name,
-            isActive: true,
-            Desc: this.desc
-        };
-
-        this.$store.dispatch('addService', newObj);
-    
-
-        setTimeout(() => {
-        this.$router.push({ name: 'services' });
-        }, 100);
+      // This is the object that will be sent to the DB.
+      let service = {
+        name: this.name,
+        description: this.Desc,
+        isActive: true,
+      };
+      // This is the axios call to the DB.
+      axios
+        .post(`${apiURL}/services/services`, service)
+        .then((res) => {
+          // This is the response from the DB.
+          console.log(res);
+          // This is the confirmation message.
+          alert('Service added successfully');
+          // This is the route to the services page.
+          this.$router.push({ name: 'services' });
+        })
+        .catch((err) => {
+          // This is the error message.
+          alert('Error adding service');
+          console.log(err);
+        });
     }
   }
 };
@@ -70,7 +80,7 @@ methods: {
             <textarea
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               rows="3"
-              v-model="desc"
+              v-model="Desc"
             ></textarea>
             <!-- <input
               type="text"

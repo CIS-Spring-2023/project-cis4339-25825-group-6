@@ -9,7 +9,8 @@ require('dotenv').config() //require the dotenv
 // creates a new instance of express application
 const app = express()
 // Add my MongoDB Atlas connection string here
-const connect_str = 'mongodb+srv://helmutkbrenner:mongo@cluster0.b5eh0xe.mongodb.net/?retryWrites=true&w=majority'
+// #### SWITCH TO USE ENV FILE ####
+const connect_str = process.env.MONGO_URL
 
 // add cors header to the server
 app.use(

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Service } = require('../models/models');
+
 // Create a new service
 router.post('/services', async (req, res) => {
   try {
@@ -62,11 +63,11 @@ router.patch('/services/:id', async (req, res) => {
 // Soft delete a service by ID
 router.delete('/services/:id', async (req, res) => {
   try {
-    const service = await Service.findById(req.params.id);
+    const service = await Service.findOne({ _id : req.params.id });
     if (!service) {
       return res.status(404).send();
     }
-    service.isActive = false;
+    service.active = false;
     await service.save();
     res.send(service);
   } catch (error) {

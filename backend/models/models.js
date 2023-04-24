@@ -22,7 +22,10 @@ const orgDataSchema = new Schema(
 // collection for clients
 const clientDataSchema = new Schema(
   {
-    _id: { type: String, default: uuid.v1 },
+    _id: { 
+      type: String, 
+      default: uuid.v1 
+    },
     firstName: {
       type: String,
       required: true
@@ -79,7 +82,10 @@ const clientDataSchema = new Schema(
 // collection for events
 const eventDataSchema = new Schema(
   {
-    _id: { type: String, default: uuid.v1 },
+    _id: { 
+      type: String, 
+      default: uuid.v1 
+    },
     org: {
       type: String,
       required: true
@@ -133,7 +139,8 @@ const eventDataSchema = new Schema(
 const authDataSchema = new Schema(
   {
     _id: {
-      type: String, default: uuid.v1,
+      type: String, 
+      default: uuid.v1,
       required: true
     },
     userName: {
@@ -150,11 +157,37 @@ const authDataSchema = new Schema(
   }
 )
 
+// collection for services offered by orgs
+// Written by Afras
+const serviceSchema = new Schema({
+  _id: {
+    type: String, 
+    default: uuid.v1,
+    required: true
+  },
+  name: { 
+    type: String, 
+    required: true 
+  },
+  description: { 
+    type: String 
+  },
+  active: { 
+    type: Boolean, 
+    default: true 
+  }
+  },
+  {
+    collection: 'service'
+  }
+);
+
 // create models from mongoose schemas
 const clients = mongoose.model('client', clientDataSchema)
 const orgs = mongoose.model('org', orgDataSchema)
 const events = mongoose.model('event', eventDataSchema)
 const auth = mongoose.model('auth', authDataSchema)
+const Service = mongoose.model('service', serviceSchema)
 
 // package the models in an object to export
-module.exports = { clients, orgs, events, auth }
+module.exports = { clients, orgs, events, auth, Service }
