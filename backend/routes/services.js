@@ -1,24 +1,22 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { service } = require("../models/models");
-const org = process.env.ORG;
+const { Service } = require('../models/models');
 // Create a new service
-
-router.post("/services", async (req, res) => {
+router.post('/services', async (req, res) => {
   try {
-    const { name, description, active } = req.body;
-    const newService = new service({ name, description, active, org: org });
-    await newService.save();
-    res.status(201).send(newService);
+    console.log(req.body);
+    const service = new Service(req.body);
+    await service.save();
+    res.status(201).send(service);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
 // Get all active services
-router.get("/services", async (req, res) => {
+router.get('/services', async (req, res) => {
   try {
-    const services = await service.find({ org: org, active: true });
+    const services = await Service.find({ active: true });
     res.send(services);
   } catch (error) {
     res.status(500).send(error);
@@ -26,45 +24,51 @@ router.get("/services", async (req, res) => {
 });
 
 // Get a specific service by ID
-router.get("/services/:id", async (req, res) => {
+router.get('/services/:id', async (req, res) => {
   try {
-    const SelectedService = await service.findById(req.params.id);
-    if (!SelectedService) {
+    const service = await Service.findById(req.params.id);
+    if (!service) {
       return res.status(404).send();
     }
-    res.send(SelectedService);
+    res.send(service);
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
 // Update a service by ID
-router.patch("/services/:id", async (req, res) => {
+router.patch('/services/:id', async (req, res) => {
   const updates = Object.keys(req.body);
+  const allowedUpdates = ['name', 'description', 'isActive'];
+  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!' });
+  }
 
   try {
-    const SelectedService = await service.findById(req.params.id);
-    if (!SelectedService) {
+    const service = await Service.findById(req.params.id);
+    if (!service) {
       return res.status(404).send();
     }
-    updates.forEach((update) => (SelectedService[update] = req.body[update]));
-    await SelectedService.save();
-    res.send(SelectedService);
+    updates.forEach((update) => (service[update] = req.body[update]));
+    await service.save();
+    res.send(service);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
 // Soft delete a service by ID
-router.delete("/services/:id", async (req, res) => {
+router.delete('/services/:id', async (req, res) => {
   try {
-    const DeletedService = await service.findById(req.params.id);
-    if (!DeletedService) {
+    const service = await Service.findById(req.params.id);
+    if (!service) {
       return res.status(404).send();
     }
-    DeletedService.active = false;
-    await DeletedService.save();
-    res.send(DeletedService);
+    service.isActive = false;
+    await service.save();
+    res.send(service);
   } catch (error) {
     res.status(500).send(error);
   }
