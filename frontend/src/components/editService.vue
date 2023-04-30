@@ -50,6 +50,7 @@ export default {
         };
 
         axios.patch(`http://localhost:3000/services/services/${this.$route.params.id}`, updatedIbj).then((res) => {
+          
         setTimeout(() => {
           this.$router.push({ name: "services" });
         }, 100);
