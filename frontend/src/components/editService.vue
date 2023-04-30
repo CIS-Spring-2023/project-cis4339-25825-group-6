@@ -24,13 +24,9 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
-
-    const service = this.$store.state.service.find((s) => s._id === this.$route.params.id);
-
-    this.name = service.name;
-    this.desc = service.description;
-    this.isActive = service.isActive;
+    this.getService();
    },
+
    methods: {
     getService() {
       axios.get(`http://localhost:3000/services/services/${this.$route.params.id}`).then((res) => {
@@ -45,17 +41,17 @@ export default {
         let updatedIbj = {
             _id: this.$route.params.id,
             name: this.name,
-            isActive: this.isActive,
+            active: this.isActive,
             description: this.desc
         };
-
-        this.$store.dispatch('updateService', updatedIbj);
-
+        console.log(updatedIbj)
+        axios.patch(`http://localhost:3000/services/services/${this.$route.params.id}`, updatedIbj).then((res) => {
         setTimeout(() => {
-            this.$router.push({ name: 'services' })
-         },100);
+          this.$router.push({ name: "services" });
+        }, 100);
+      });
     }
-    }
+  }
 };
     
 

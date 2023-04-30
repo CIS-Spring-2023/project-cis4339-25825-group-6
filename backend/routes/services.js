@@ -38,38 +38,32 @@ router.get('/services/:id', async (req, res) => {
 });
 
 // Update a service by ID
-router.patch('/services/:id', async (req, res) => {
+router.patch("/services/:id", async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['name', 'description', 'isActive'];
-  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
-
-  if (!isValidOperation) {
-    return res.status(400).send({ error: 'Invalid updates!' });
-  }
 
   try {
-    const service = await Service.findById(req.params.id);
-    if (!service) {
+    const SelectedService = await service.findById(req.params.id);
+    if (!SelectedService) {
       return res.status(404).send();
     }
-    updates.forEach((update) => (service[update] = req.body[update]));
-    await service.save();
-    res.send(service);
+    updates.forEach((update) => (SelectedService[update] = req.body[update]));
+    await SelectedService.save();
+    res.send(SelectedService);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
 // Soft delete a service by ID
-router.delete('/services/:id', async (req, res) => {
+router.delete("/services/:id", async (req, res) => {
   try {
-    const service = await Service.findOne({ _id : req.params.id });
-    if (!service) {
+    const DeletedService = await service.findById(req.params.id);
+    if (!DeletedService) {
       return res.status(404).send();
     }
-    service.active = false;
-    await service.save();
-    res.send(service);
+    DeletedService.active = false;
+    await DeletedService.save();
+    res.send(DeletedService);
   } catch (error) {
     res.status(500).send(error);
   }
