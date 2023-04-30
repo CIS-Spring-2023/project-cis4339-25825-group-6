@@ -38,7 +38,7 @@ router.get('/services/:id', async (req, res) => {
 });
 
 // Update a service by ID
-router.patch('/services/:id', async (req, res) => {
+router.patch("/services/:id", async (req, res) => {
   const updates = Object.keys(req.body);
 
   try {
@@ -55,7 +55,7 @@ router.patch('/services/:id', async (req, res) => {
 });
 
 // Soft delete a service by ID
-router.delete('/services/:id', async (req, res) => {
+router.delete("/services/:id", async (req, res) => {
   try {
     const DeletedService = await service.findById(req.params.id);
     if (!DeletedService) {

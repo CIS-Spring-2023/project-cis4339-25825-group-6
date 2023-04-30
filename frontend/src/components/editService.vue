@@ -41,10 +41,10 @@ export default {
         let updatedIbj = {
             _id: this.$route.params.id,
             name: this.name,
-            isActive: this.isActive,
+            active: this.isActive,
             description: this.desc
         };
-
+        console.log(updatedIbj)
         axios.patch(`http://localhost:3000/services/services/${this.$route.params.id}`, updatedIbj).then((res) => {
         setTimeout(() => {
           this.$router.push({ name: "services" });
