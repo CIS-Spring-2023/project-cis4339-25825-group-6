@@ -9,7 +9,7 @@ const { auth } = require('../models/models')
 
 // Routes for the auth collection
 // GET auth
-router.post('/userlogin', (req, res) => {
+router.get('/userlogin', (req, res) => {
     auth.findOne({ passPhrase: req.body.passPhrase }, (error, auth) => {
         if (req.body.passPhrase) {
             return res.status(200).json({
