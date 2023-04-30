@@ -5,7 +5,6 @@ const { Service } = require('../models/models');
 // Create a new service
 router.post('/services', async (req, res) => {
   try {
-    console.log(req.body);
     const service = new Service(req.body);
     await service.save();
     res.status(201).send(service);
@@ -38,14 +37,8 @@ router.get('/services/:id', async (req, res) => {
 });
 
 // Update a service by ID
-router.patch('/services/:id', async (req, res) => {
+router.put('/services/:id', async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['name', 'description', 'isActive'];
-  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
-
-  if (!isValidOperation) {
-    return res.status(400).send({ error: 'Invalid updates!' });
-  }
 
   try {
     const service = await Service.findById(req.params.id);
@@ -54,7 +47,7 @@ router.patch('/services/:id', async (req, res) => {
     }
     updates.forEach((update) => (service[update] = req.body[update]));
     await service.save();
-    res.send(service);
+    return res.status(200).send()
   } catch (error) {
     res.status(400).send(error);
   }

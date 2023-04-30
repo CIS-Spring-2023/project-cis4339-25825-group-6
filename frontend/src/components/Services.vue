@@ -20,8 +20,7 @@ export default {
     this.getServices();
   },
   methods: {
-    getServices() {
-      console.log('Getting services')
+    getServices() {      
       axios.get(`${apiURL}/services/services`).then((response) => {
         this.services = response.data;
       });

@@ -23,8 +23,13 @@ export default {
           zip: ''
         },
         description: ''
-      }
+      },
+      activeServices: null
     }
+  },
+  mounted() {
+    console.log('mounted')
+      this.getServices();
   },
   methods: {
     async handleSubmitForm() {
@@ -42,6 +47,12 @@ export default {
             console.log(error)
           })
       }
+    },
+    getServices() {
+      axios.get(`${apiURL}/services/services`).then((response) => {
+        console.log('response', response)
+        this.activeServices = response.data
+      })
     }
   },
   // sets validations for the various data properties
@@ -53,7 +64,7 @@ export default {
       }
     }
   }
-}
+  }
 </script>
 <template>
   <main>
@@ -137,60 +148,23 @@ export default {
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
             <div>
-              <label for="familySupport" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="familySupport"
-                  value="Family Support"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Family Support</span>
-              </label>
-            </div>
-            <div>
-              <label for="adultEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="adultEducation"
-                  value="Adult Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Adult Education</span>
-              </label>
-            </div>
-            <div>
-              <label for="youthServices" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="youthServices"
-                  value="Youth Services Program"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Youth Services Program</span>
-              </label>
-            </div>
-            <div>
-              <label for="childhoodEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="childhoodEducation"
-                  value="Early Childhood Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Early Childhood Education</span>
-              </label>
+              <ul>
+                <li v-for="service in activeServices" :key="service._id">
+                  <label class="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      :value="service.name"
+                      v-model="event.services"
+                      class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                      notchecked
+                    />
+                    <span class="ml-2">{{ service.name }}</span>
+                  </label>
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-
+          </div>
         <!-- grid container -->
         <div
           class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
@@ -268,3 +242,4 @@ export default {
     </div>
   </main>
 </template>
+
