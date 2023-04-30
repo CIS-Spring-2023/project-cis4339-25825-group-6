@@ -24,36 +24,26 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
-
-    const service = this.$store.state.service.find((s) => s._id === this.$route.params.id);
-
-    this.name = service.name;
-    this.desc = service.description;
-    this.isActive = service.isActive;
+    this.getService();
    },
    methods: {
     getService() {
       axios.get(`http://localhost:3000/services/services/${this.$route.params.id}`).then((res) => {
-        console.log(res);
         this.name = res.data.name;
         this.desc = res.data.description;
-        this.isActive = res.data.isActive;
+        this.isActive = res.data.active;
       });
     },
-
     updateServices(){
         let updatedIbj = {
-            _id: this.$route.params.id,
             name: this.name,
             isActive: this.isActive,
             description: this.desc
         };
 
-        this.$store.dispatch('updateService', updatedIbj);
-
-        setTimeout(() => {
-            this.$router.push({ name: 'services' })
-         },100);
+        axios.put(`http://localhost:3000/services/services/${this.$route.params.id}`, updatedIbj).then(response => {
+          this.$router.push({ name: 'services' })
+        });
     }
     }
 };

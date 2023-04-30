@@ -143,11 +143,11 @@ const authDataSchema = new Schema(
       default: uuid.v1,
       required: true
     },
-    userName: {
+    UserName: {
       type: String,
       required: true
     },
-    password: {
+    EncryptedPass: {
       type: String,
       required: true
   },

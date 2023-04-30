@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios'
 import { role } from '../role'
 
 // Helmut Brenner - This login component is used to login to the application
@@ -7,32 +8,32 @@ export default {
   // Store input data here once entered.
   data() {
     return {
-      viewerUsername: 'viewer',
-      viewerPassphrase: 'password',
-      editorUsername: 'editor',
-      editorPassphrase: 'password',
       inputUsername: '',
       inputPassphrase: '',
       role
     }
   },
   methods: {
-    // Helmut Brenner - This method will take the user input and compare it to the data in the component. If it matches, it will set the user role in the state management file role.js.
+    // Helmut Brenner - This method will take take the input for the login and then encyrpt the password, then it will send an axios call to the auth API which checks the database to see if the user exists.
     signIn() {
-      if (this.inputUsername === this.viewerUsername && this.inputPassphrase === this.viewerPassphrase) {
-        // set userRole to viewer and reroute to the dashboard
-        this.role.userRole = 'viewer'
-        this.$router.push({ name: 'dashboard' })
-      } else if (this.inputUsername === this.editorUsername && this.inputPassphrase === this.editorPassphrase) {
-        // set userRole to editor and reroute to the dashboard
-        this.role.userRole = 'editor'
-        this.$router.push({ name: 'dashboard' })
-      } else {
-        alert('Invalid username or password. Please Try Again.')
-        this.$router.push({ name: 'login' })
-      }
-    }
+      //axios call to the auth API
+      axios.post('http://localhost:3000/auth/login', {
+        UserName: this.inputUsername,
+        passphrase: this.inputPassphrase
+      }).then((response) => {
+        // Helmut Brenner - This will store the role of the user in the store.
+        if (response.status === 200) {
+          // set role to this.inputUsername
+          this.role.userRole = this.inputUsername
+          this.$router.push({ name: 'dashboard' })
+        } 
+        else {
+          alert(response.data.message)
+          this.$router.push({ name: 'login' })
+        }
+    })
   }
+}
 }
 </script>
 
