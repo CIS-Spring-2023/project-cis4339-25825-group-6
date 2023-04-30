@@ -21,6 +21,7 @@ export default {
   },
   methods: {
     getServices() {
+      console.log('Getting services')
       axios.get(`${apiURL}/services/services`).then((response) => {
         this.services = response.data;
       });
@@ -37,12 +38,9 @@ export default {
       axios.delete(`${apiURL}/services/services/${id}`)
         .then((response) => {
         // Find the index of the deleted service in the array
-        const index = this.services.findIndex(service => service._id === id);
-        if (index !== -1) {
         // Use Vue.set to update the array
-        Vue.set(this.services, index, response.data);
-      }
-    })
+        this.getServices();
+      })
       .catch((error) => {
         console.error(error);
     });
