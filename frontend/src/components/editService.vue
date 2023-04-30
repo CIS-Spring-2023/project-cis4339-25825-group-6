@@ -24,12 +24,8 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
+    this.getService();
 
-    const service = this.$store.state.service.find((s) => s._id === this.$route.params.id);
-
-    this.name = service.name;
-    this.desc = service.description;
-    this.isActive = service.isActive;
    },
    methods: {
     getService() {
@@ -50,7 +46,7 @@ export default {
         };
 
         axios.patch(`http://localhost:3000/services/services/${this.$route.params.id}`, updatedIbj).then((res) => {
-          
+
         setTimeout(() => {
           this.$router.push({ name: "services" });
         }, 100);
