@@ -49,13 +49,13 @@ export default {
             description: this.desc
         };
 
-        this.$store.dispatch('updateService', updatedIbj);
-
+        axios.patch(`http://localhost:3000/services/services/${this.$route.params.id}`, updatedIbj).then((res) => {
         setTimeout(() => {
-            this.$router.push({ name: 'services' })
-         },100);
-    }
-    }
+          this.$router.push({ name: "services" });
+        }, 100);
+      });
+    },
+  },
 };
     
 
