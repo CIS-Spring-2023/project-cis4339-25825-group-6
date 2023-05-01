@@ -32,3 +32,8 @@ Currently there are two users available for testing purposes:
 
 These two roles are used to restrict access to certain pages. Upon first logging in, the role is null so you see the login and dashboard. Upon logging
 in with one of the above credentials, the role is set and you can navigate to the other pages.
+
+
+This is the API postman Document.
+
+https://documenter.getpostman.com/view/23891003/2s93eSab5k
